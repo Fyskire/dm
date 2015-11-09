@@ -1,5 +1,3 @@
-package apriori;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,22 +17,23 @@ public class Apriori {
     //Integer = Item; TreeSet = Itemset; kth innerList contains all frequent k+1-itemsets
     private ArrayList<ArrayList<TreeSet<Integer>>> candidateList; //Integer = Item; 
     private int k; //current items in a set +1
-    private double treshold;
-    private ArrayList<TreeSet<Integer>> negativeBorderList;
+    private double threshold;
+    private ArrayList<ArrayList<TreeSet<Integer>>> negativeBorderList;
+    private ArrayList<ArrayList<TreeSet<Integer>>> positiveBorderList;
     
     /**
      * Constructor
      * @param path
-     * @param treshold
+     * @param threshold
      */
-    public Apriori(String path, double treshold) {
-        configure(path, treshold);
+    public Apriori(String path, double threshold) {
+        configure(path, threshold);
     }
     
     /**
      * to input the given csv files
      * @param path
-     * @return csv_data
+     * @return
      */
     public ArrayList<ArrayList<Integer>> input_csv(String path){ //Bsp: path = "/Users/me/Downloads/test.csv"
         
@@ -105,29 +104,38 @@ public class Apriori {
      * scan database and remove not frequent itemsets with k+1 items
      */
     public void findFrequent() {
-        int min = (int)(Math.ceil(data.size() * treshold)); // calculate minsup
+        int min = (int)(Math.ceil(data.size() * threshold)); // calculate minsup
+        int[] setcounts = new int[candidateList.get(k).size()];
         
-        for (Iterator<TreeSet<Integer>> it1 = candidateList.get(k).iterator(); it1.hasNext();) { // go through new itemsets
-            
-            TreeSet<Integer> cur = it1.next(); //current itemset
-            
-            int count1 = 0; // to count the lines which contain the itemset
-            for (int i = 0; i < data.size(); i++) { // go through dataset
-                int count2 = 0; // to count if all items of the set in the current line
+        //counting
+        for (int i = 0; i < data.size(); i++) { // go through dataset
+            for (int j = 0; j < candidateList.get(k).size(); j++) { // go through new itemsets
+                
+                TreeSet<Integer> cur = candidateList.get(k).get(j); //current itemset
+                int itemcount = 0; // to count if all items of the set in the current line
                 for (Iterator<Integer> it2 = cur.iterator(); it2.hasNext();) { // go through itemset
-                    count2 += data.get(i).get(it2.next());
+                    itemcount += data.get(i).get(it2.next());
                 }
-                if (count2 == cur.size()) {
-                    count1++;
+                if (itemcount == cur.size()) {
+                    setcounts[j]++;
                 }
-            }
-            
-            if (count1 < min) { //compare count with minsup
-            	
-            	negativeBorderList.add(cur);
-                it1.remove();
+                
             }
         }
+        
+        ArrayList<TreeSet<Integer>> kBorders = new ArrayList<TreeSet<Integer>>();
+        negativeBorderList.add(kBorders);
+        //removing
+        int j = -1;
+        for (Iterator<TreeSet<Integer>> it = candidateList.get(k).iterator(); it.hasNext();) {
+            j++;
+            TreeSet<Integer> cur = it.next();
+            if (setcounts[j] < min) { //compare count with minsup
+                kBorders.add(cur); // add to negative Border
+                it.remove();
+            }
+        }
+        
     }
     
     /**
@@ -158,27 +166,25 @@ public class Apriori {
                 if (joinable) {
                     cur.addAll(candidateList.get(k-1).get(i));
                     cur.addAll(candidateList.get(k-1).get(j));
-                    candidates.add(cur);
+                    
+                    //prune step
+                    boolean subsetsFrequent = true;
+                    for (Iterator<Integer> itemIt = cur.iterator(); itemIt.hasNext();) { // go through itemset
+                        // build subsets and check if they are frequent
+                        TreeSet<Integer> subset = new TreeSet<Integer>();
+                        subset.addAll(cur);
+                        subset.remove(itemIt.next());
+                        if (!candidateList.get(k-1).contains(subset)) {
+                            subsetsFrequent = false;
+                            break;
+                        }
+                    }
+                    if (subsetsFrequent) {
+                        candidates.add(cur);
+                    }
                 }
                 
             }
-        }
-        
-        //prune step
-        for (Iterator<TreeSet<Integer>> setIt = candidateList.get(k).iterator(); setIt.hasNext();) { // go through new itemsets
-            TreeSet<Integer> setToReview = setIt.next(); //current itemset to check subsets
-            
-            for (Iterator<Integer> itemIt = setToReview.iterator(); itemIt.hasNext();) { // go through itemset
-                // build subsets and check if they are frequent
-                TreeSet<Integer> subset = new TreeSet<Integer>();
-                subset.addAll(setToReview);
-                subset.remove(itemIt.next());
-                if (!candidateList.get(k-1).contains(subset)) {
-                    setIt.remove();
-                    break;
-                }
-            }
-            
         }
     }
     
@@ -187,7 +193,8 @@ public class Apriori {
      */
     public void start_algorithm() {
         candidateList = new ArrayList<ArrayList<TreeSet<Integer>>>();
-        negativeBorderList = new ArrayList<TreeSet<Integer>>();
+        negativeBorderList = new ArrayList<ArrayList<TreeSet<Integer>>>();
+        
         createFirstCandidates();
         findFrequent();
         
@@ -196,16 +203,18 @@ public class Apriori {
             createCandidates();
             findFrequent();
         }
+        
+        findPositiveBorders();
     }
     
     /**
      * configure the algorithm
      * @param path
-     * @param treshold
+     * @param threshold
      */
-    public void configure(String path, double treshold) {
+    public void configure(String path, double threshold) {
         data = input_csv(path);
-        this.treshold = treshold;
+        this.threshold = threshold;
     }
     
     /**
@@ -231,7 +240,10 @@ public class Apriori {
     public void printFrequentSets() {
         System.out.println("Frequent Candidates:");
         for (int i = 0; i < candidateList.size(); i++) {
-            System.out.println("with " + (i+1) + " items:");
+            System.out.println(candidateList.get(i).size() + " itemsets with " + (i+1) + " items:");
+            
+            //print each itemset
+            /*
             for (int j = 0; j < candidateList.get(i).size(); j++) {
                 System.out.print("{");
                 for (Iterator<Integer> it2 = candidateList.get(i).get(j).iterator(); it2.hasNext();) {
@@ -244,35 +256,87 @@ public class Apriori {
                 }
                 System.out.println();
                 
-            }
+            }*/
+            
         }
         
     }
     
+    /**
+     * to print the negative borders to the console
+     */
     public void printNegativeBorder(){
-    	System.out.println("Negative borders are: ");
-    	for(int i = 0; i < negativeBorderList.size(); i++){
-    		System.out.println(negativeBorderList.get(i));
-    	}
+        System.out.println("Negative borders are: ");
+        for(int i = 0; i < negativeBorderList.size(); i++){
+            System.out.println(negativeBorderList.get(i).size() + " negative Borders with " + (i+1) + " items:");
+            
+            //print each Border
+            /*
+            for(int j = 0; j < negativeBorderList.get(i).size(); j++){
+                System.out.println(negativeBorderList.get(i).get(j));
+            }*/
+        }
     }
     
+    /**
+     * to find positive borders
+     */
+    public void findPositiveBorders() {
+        positiveBorderList = new ArrayList<ArrayList<TreeSet<Integer>>>();
+        for (int i = 0; i < candidateList.size()-1; i++) {
+            ArrayList<TreeSet<Integer>> iBorders = new ArrayList<TreeSet<Integer>>(); //positive Border with i+1 items
+            positiveBorderList.add(iBorders);
+            for (int j = 0; j < candidateList.get(i).size(); j++) {
+                boolean positiveBorder = true;
+                for (int l = 0; l < candidateList.get(i+1).size(); l++) { // check if a more specific set is frequent
+                    if (candidateList.get(i+1).get(l).containsAll(candidateList.get(i).get(j))) {
+                        positiveBorder = false;
+                    }
+                }
+                if (positiveBorder) {
+                    iBorders.add(candidateList.get(i).get(j));
+                }
+            }
+        }
+    }
+    
+    /**
+     * to print the positive borders to the console
+     */
+    public void printPositiveBorder(){
+        System.out.println("Positive borders are: ");
+        for(int i = 0; i < positiveBorderList.size(); i++){
+            System.out.println(positiveBorderList.get(i).size() + " positive Borders with " + (i+1) + " items:");
+            
+            //print each Border
+            /*
+            for(int j = 0; j < positiveBorderList.get(i).size(); j++){
+                System.out.println(positiveBorderList.get(i).get(j));
+            }*/
+        }
+    }
     
     /**
      * main
      * @param args
      */
     public static void main(String[] args) {
-        Apriori a = new Apriori("U:\\eclipse\\apriori\\dm2.csv", 0.4);
+        Apriori a = new Apriori("C:\\Users\\John\\Downloads\\dm4.csv", 0.4);
         
         long start = System.currentTimeMillis();
         a.start_algorithm();
         long end = System.currentTimeMillis();
-//        System.out.println("Run-time: " + (end-start) + " ms");
-        
-//        a.printData();
-        a.printFrequentSets();
-        a.printNegativeBorder();
         System.out.println("Run-time: " + (end-start) + " ms");
+        System.out.println();
+        
+        //a.printData();
+        a.printFrequentSets();
+        System.out.println();
+        a.printPositiveBorder();
+        System.out.println();
+        a.printNegativeBorder();
+        
+        
     }
 
 }
