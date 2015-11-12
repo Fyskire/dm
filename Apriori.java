@@ -20,6 +20,9 @@ public class Apriori {
     private double threshold;
     private ArrayList<ArrayList<TreeSet<Integer>>> negativeBorderList;
     private ArrayList<ArrayList<TreeSet<Integer>>> positiveBorderList;
+    private ArrayList<ArrayList<Integer>> countList; // counts the appearance of itemsets 
+    private ArrayList<ArrayList<TreeSet<Integer>>> closedSets;
+    private ArrayList<ArrayList<TreeSet<Integer>>> freeSets;
     
     /**
      * Constructor
@@ -125,16 +128,23 @@ public class Apriori {
         
         ArrayList<TreeSet<Integer>> kBorders = new ArrayList<TreeSet<Integer>>();
         negativeBorderList.add(kBorders);
+        ArrayList<TreeSet<Integer>> frequentKItems = new ArrayList<TreeSet<Integer>>();
+        ArrayList<Integer> kItemsCounts = new ArrayList<Integer>();
         //removing
-        int j = -1;
-        for (Iterator<TreeSet<Integer>> it = candidateList.get(k).iterator(); it.hasNext();) {
-            j++;
-            TreeSet<Integer> cur = it.next();
+        for (int j = 0; j < candidateList.get(k).size(); j++) {
+            TreeSet<Integer> cur = candidateList.get(k).get(j);
             if (setcounts[j] < min) { //compare count with minsup
                 kBorders.add(cur); // add to negative Border
-                it.remove();
+                //it.remove();
+            } else {
+            	frequentKItems.add(cur);
+            	kItemsCounts.add(setcounts[j]);
             }
         }
+        
+        
+        candidateList.set(k, frequentKItems);
+        countList.add(kItemsCounts);
         
     }
     
@@ -194,6 +204,8 @@ public class Apriori {
     public void start_algorithm() {
         candidateList = new ArrayList<ArrayList<TreeSet<Integer>>>();
         negativeBorderList = new ArrayList<ArrayList<TreeSet<Integer>>>();
+        k = 0;
+        countList = new ArrayList<ArrayList<Integer>>();
         
         createFirstCandidates();
         findFrequent();
@@ -205,6 +217,7 @@ public class Apriori {
         }
         
         findPositiveBorders();
+        findFreeSets();
     }
     
     /**
@@ -243,7 +256,7 @@ public class Apriori {
             System.out.println(candidateList.get(i).size() + " itemsets with " + (i+1) + " items:");
             
             //print each itemset
-            /*
+            
             for (int j = 0; j < candidateList.get(i).size(); j++) {
                 System.out.print("{");
                 for (Iterator<Integer> it2 = candidateList.get(i).get(j).iterator(); it2.hasNext();) {
@@ -256,7 +269,7 @@ public class Apriori {
                 }
                 System.out.println();
                 
-            }*/
+            }
             
         }
         
@@ -271,30 +284,40 @@ public class Apriori {
             System.out.println(negativeBorderList.get(i).size() + " negative Borders with " + (i+1) + " items:");
             
             //print each Border
-            /*
+            
             for(int j = 0; j < negativeBorderList.get(i).size(); j++){
                 System.out.println(negativeBorderList.get(i).get(j));
-            }*/
+            }
         }
     }
     
     /**
-     * to find positive borders
+     * to find positive borders and CLOSED sets
      */
     public void findPositiveBorders() {
         positiveBorderList = new ArrayList<ArrayList<TreeSet<Integer>>>();
+        closedSets = new ArrayList<ArrayList<TreeSet<Integer>>>();
         for (int i = 0; i < candidateList.size()-1; i++) {
             ArrayList<TreeSet<Integer>> iBorders = new ArrayList<TreeSet<Integer>>(); //positive Border with i+1 items
             positiveBorderList.add(iBorders);
+            ArrayList<TreeSet<Integer>> closedISets = new ArrayList<TreeSet<Integer>>(); //closed Sets with i+1 items
+            closedSets.add(closedISets);
             for (int j = 0; j < candidateList.get(i).size(); j++) {
                 boolean positiveBorder = true;
+                boolean closed = true;
                 for (int l = 0; l < candidateList.get(i+1).size(); l++) { // check if a more specific set is frequent
                     if (candidateList.get(i+1).get(l).containsAll(candidateList.get(i).get(j))) {
                         positiveBorder = false;
+                        if (countList.get(i).get(j) == countList.get(i+1).get(l)) { // check if closed
+                        	closed = false;
+                        }
                     }
                 }
                 if (positiveBorder) {
                     iBorders.add(candidateList.get(i).get(j));
+                }
+                if (closed) {
+                    closedISets.add(candidateList.get(i).get(j));
                 }
             }
         }
@@ -303,16 +326,95 @@ public class Apriori {
     /**
      * to print the positive borders to the console
      */
-    public void printPositiveBorder(){
+    public void printPositiveBorder() {
         System.out.println("Positive borders are: ");
         for(int i = 0; i < positiveBorderList.size(); i++){
             System.out.println(positiveBorderList.get(i).size() + " positive Borders with " + (i+1) + " items:");
             
             //print each Border
-            /*
+            
             for(int j = 0; j < positiveBorderList.get(i).size(); j++){
                 System.out.println(positiveBorderList.get(i).get(j));
-            }*/
+            }
+        }
+    }
+    
+    /**
+     * to print frequent closed sets (which were found with findPositiveBorders-method) to the console
+     */
+    public void printClosedSets() {
+    	System.out.println("Closed Sets are: ");
+        for(int i = 0; i < closedSets.size(); i++){
+            System.out.println(closedSets.get(i).size() + " closed Sets with " + (i+1) + " items:");
+            
+            //print closed Set
+            
+            for(int j = 0; j < closedSets.get(i).size(); j++){
+                System.out.println(closedSets.get(i).get(j));
+            }
+        }
+    }
+    
+    /**
+     * to find free sets
+     */
+    public void findFreeSets() {
+    	freeSets = new ArrayList<ArrayList<TreeSet<Integer>>>();
+    	for (int i = 0; i < candidateList.size()-1; i++) {
+    	    freeSets.add(null);
+    	}
+    	
+    	for (int i = candidateList.size()-2; i > 0; i--) {
+    		ArrayList<TreeSet<Integer>> freeISets = new ArrayList<TreeSet<Integer>>();
+    		freeSets.set(i, freeISets);
+    		for (int j = 0; j < candidateList.get(i).size(); j++) {
+    			TreeSet<Integer> set = candidateList.get(i).get(j);
+    			boolean free = true;
+    			for (Iterator<Integer> itemIt = set.iterator(); itemIt.hasNext();) { // go through items
+                    // build subsets and check their occurrence
+                    TreeSet<Integer> subset = new TreeSet<Integer>();
+                    subset.addAll(set);
+                    subset.remove(itemIt.next());
+                    int index = candidateList.get(i-1).indexOf(subset);
+                    if (index >= 0) {
+                        if (countList.get(i).get(j) == countList.get(i-1).get(index)) {
+                        	free = false;
+                        	break;
+                        }
+                    }
+                }
+    			
+    			if (free) {
+    				freeISets.add(candidateList.get(i).get(j));
+    			}
+    			
+    		}
+    	}
+    	
+    	// add the 1-item-sets with less appearance than max possible
+    	ArrayList<TreeSet<Integer>> freeISets = new ArrayList<TreeSet<Integer>>();
+        freeSets.set(0, freeISets);
+    	for (int j = 0; j < candidateList.get(0).size(); j++) {
+    		
+    		if (countList.get(0).get(j) < data.size()) {
+    			freeISets.add(candidateList.get(0).get(j));
+    		}
+    	}
+    }
+    
+    /**
+     * to print frequent free sets to the console
+     */
+    public void printFreeSets() {
+    	System.out.println("Free Sets are: ");
+        for(int i = 0; i < freeSets.size(); i++){
+            System.out.println(freeSets.get(i).size() + " free Sets with " + (i+1) + " items:");
+            
+            //print free Set
+            
+            for(int j = 0; j < freeSets.get(i).size(); j++){
+                System.out.println(freeSets.get(i).get(j));
+            }
         }
     }
     
@@ -321,7 +423,7 @@ public class Apriori {
      * @param args
      */
     public static void main(String[] args) {
-        Apriori a = new Apriori("C:\\Users\\John\\Downloads\\dm4.csv", 0.4);
+        Apriori a = new Apriori("C:\\Users\\John\\Downloads\\dm1.csv", 0.4);
         
         long start = System.currentTimeMillis();
         a.start_algorithm();
@@ -335,7 +437,10 @@ public class Apriori {
         a.printPositiveBorder();
         System.out.println();
         a.printNegativeBorder();
-        
+        System.out.println();
+        a.printClosedSets();
+        System.out.println();
+        a.printFreeSets();
         
     }
 
