@@ -1,0 +1,18 @@
+
+conf = 0.9
+runtime = 0-1s
+
+conf = 0.8
+runtime = 0-1s
+
+conf = 0.7
+runtime = 0-1s
+
+conf = 0.6
+runtime = 0-1s
+
+conf = 0.5
+runtime = 0-1s
+
+conf = 0.4
+runtime = 0-1s

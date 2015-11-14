@@ -1,0 +1,83 @@
+data dm1
+
+conf = 0.9
+runtime = 0-1s
+
+conf = 0.8
+runtime = 0-1s
+
+conf = 0.7
+runtime = 0-1s
+
+conf = 0.6
+runtime = 0-1s
+
+conf = 0.5
+runtime = 0-1s
+
+conf = 0.4
+runtime = 0-1s
+
+
+data dm2
+
+conf = 0.9
+runtime = 0-1s
+
+conf = 0.8
+runtime = 0-1s
+
+conf = 0.7
+runtime = 0-1s
+
+conf = 0.6
+runtime = 0-1s
+
+conf = 0.5
+runtime = 1s
+
+conf = 0.4
+runtime = 1s
+
+
+data dm3
+
+conf = 0.9
+runtime = 0-1s
+
+conf = 0.8
+runtime = 0-1s
+
+conf = 0.7
+runtime = 0-1s
+
+conf = 0.6
+runtime = 0-1s
+
+conf = 0.5
+runtime = 0-1s
+
+conf = 0.4
+runtime = 0-1s
+
+
+data dm4
+
+conf = 0.9
+runtime = 0-1s
+
+conf = 0.8
+runtime = 0-1s
+
+conf = 0.7
+runtime = 1s
+
+conf = 0.6
+runtime = 0-1s
+
+conf = 0.5
+runtime = 0-1s
+
+conf = 0.4
+runtime = 0-1s
+

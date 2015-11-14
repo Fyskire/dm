@@ -1,0 +1,36 @@
+=== Run information ===
+
+Scheme:       weka.associations.FPGrowth -P 2 -I -1 -N 15 -T 0 -C 0.4 -D 0.05 -U 1.0 -M 0.1
+Relation:     dm1
+Instances:    20
+Attributes:   10
+              attribute_0
+              attribute_1
+              attribute_2
+              attribute_3
+              attribute_4
+              attribute_5
+              attribute_6
+              attribute_7
+              attribute_8
+              attribute_9
+=== Associator model (full training set) ===
+
+FPGrowth found 22 rules (displaying top 15)
+
+ 1. [attribute_3=1, attribute_5=1]: 10 ==> [attribute_6=1]: 10   <conf:(1)> lift:(1.18) lev:(0.08) conv:(1.5) 
+ 2. [attribute_3=1]: 16 ==> [attribute_6=1]: 15   <conf:(0.94)> lift:(1.1) lev:(0.07) conv:(1.2) 
+ 3. [attribute_2=1, attribute_3=1]: 14 ==> [attribute_6=1]: 13   <conf:(0.93)> lift:(1.09) lev:(0.06) conv:(1.05) 
+ 4. [attribute_5=1]: 12 ==> [attribute_6=1]: 11   <conf:(0.92)> lift:(1.08) lev:(0.04) conv:(0.9) 
+ 5. [attribute_6=1, attribute_5=1]: 11 ==> [attribute_3=1]: 10   <conf:(0.91)> lift:(1.14) lev:(0.06) conv:(1.1) 
+ 6. [attribute_6=1]: 17 ==> [attribute_2=1]: 15   <conf:(0.88)> lift:(1.04) lev:(0.03) conv:(0.85) 
+ 7. [attribute_2=1]: 17 ==> [attribute_6=1]: 15   <conf:(0.88)> lift:(1.04) lev:(0.03) conv:(0.85) 
+ 8. [attribute_6=1]: 17 ==> [attribute_3=1]: 15   <conf:(0.88)> lift:(1.1) lev:(0.07) conv:(1.13) 
+ 9. [attribute_3=1]: 16 ==> [attribute_2=1]: 14   <conf:(0.88)> lift:(1.03) lev:(0.02) conv:(0.8) 
+10. [attribute_6=1, attribute_2=1]: 15 ==> [attribute_3=1]: 13   <conf:(0.87)> lift:(1.08) lev:(0.05) conv:(1) 
+11. [attribute_6=1, attribute_3=1]: 15 ==> [attribute_2=1]: 13   <conf:(0.87)> lift:(1.02) lev:(0.01) conv:(0.75) 
+12. [attribute_5=1]: 12 ==> [attribute_3=1]: 10   <conf:(0.83)> lift:(1.04) lev:(0.02) conv:(0.8) 
+13. [attribute_5=1]: 12 ==> [attribute_6=1, attribute_3=1]: 10   <conf:(0.83)> lift:(1.11) lev:(0.05) conv:(1) 
+14. [attribute_2=1]: 17 ==> [attribute_3=1]: 14   <conf:(0.82)> lift:(1.03) lev:(0.02) conv:(0.85) 
+15. [attribute_3=1]: 16 ==> [attribute_6=1, attribute_2=1]: 13   <conf:(0.81)> lift:(1.08) lev:(0.05) conv:(1) 
+
