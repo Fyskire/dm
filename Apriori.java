@@ -256,7 +256,7 @@ public class Apriori {
             System.out.println(candidateList.get(i).size() + " itemsets with " + (i+1) + " items:");
             
             //print each itemset
-            
+            /*
             for (int j = 0; j < candidateList.get(i).size(); j++) {
                 System.out.print("{");
                 for (Iterator<Integer> it2 = candidateList.get(i).get(j).iterator(); it2.hasNext();) {
@@ -269,7 +269,7 @@ public class Apriori {
                 }
                 System.out.println();
                 
-            }
+            }*/
             
         }
         
@@ -284,10 +284,10 @@ public class Apriori {
             System.out.println(negativeBorderList.get(i).size() + " negative Borders with " + (i+1) + " items:");
             
             //print each Border
-            
+            /*
             for(int j = 0; j < negativeBorderList.get(i).size(); j++){
                 System.out.println(negativeBorderList.get(i).get(j));
-            }
+            }*/
         }
     }
     
@@ -332,10 +332,10 @@ public class Apriori {
             System.out.println(positiveBorderList.get(i).size() + " positive Borders with " + (i+1) + " items:");
             
             //print each Border
-            
+            /*
             for(int j = 0; j < positiveBorderList.get(i).size(); j++){
                 System.out.println(positiveBorderList.get(i).get(j));
-            }
+            }*/
         }
     }
     
@@ -348,10 +348,10 @@ public class Apriori {
             System.out.println(closedSets.get(i).size() + " closed Sets with " + (i+1) + " items:");
             
             //print closed Set
-            
+            /*
             for(int j = 0; j < closedSets.get(i).size(); j++){
                 System.out.println(closedSets.get(i).get(j));
-            }
+            }*/
         }
     }
     
@@ -392,13 +392,15 @@ public class Apriori {
     	}
     	
     	// add the 1-item-sets with less appearance than max possible
-    	ArrayList<TreeSet<Integer>> freeISets = new ArrayList<TreeSet<Integer>>();
-        freeSets.set(0, freeISets);
-    	for (int j = 0; j < candidateList.get(0).size(); j++) {
-    		
-    		if (countList.get(0).get(j) < data.size()) {
-    			freeISets.add(candidateList.get(0).get(j));
-    		}
+    	if (!freeSets.isEmpty()) {
+        	ArrayList<TreeSet<Integer>> freeISets = new ArrayList<TreeSet<Integer>>();
+            freeSets.set(0, freeISets);
+        	for (int j = 0; j < candidateList.get(0).size(); j++) {
+        		
+        		if (countList.get(0).get(j) < data.size()) {
+        			freeISets.add(candidateList.get(0).get(j));
+        		}
+        	}
     	}
     }
     
@@ -411,10 +413,10 @@ public class Apriori {
             System.out.println(freeSets.get(i).size() + " free Sets with " + (i+1) + " items:");
             
             //print free Set
-            
+            /*
             for(int j = 0; j < freeSets.get(i).size(); j++){
                 System.out.println(freeSets.get(i).get(j));
-            }
+            }*/
         }
     }
     
@@ -423,7 +425,7 @@ public class Apriori {
      * @param args
      */
     public static void main(String[] args) {
-        Apriori a = new Apriori("C:\\Users\\John\\Downloads\\dm1.csv", 0.4);
+        Apriori a = new Apriori("C:\\Users\\John\\Downloads\\dm1.csv", 0.5);
         
         long start = System.currentTimeMillis();
         a.start_algorithm();
