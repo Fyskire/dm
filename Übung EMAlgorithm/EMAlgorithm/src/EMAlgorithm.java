@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 
@@ -157,31 +158,6 @@ public class EMAlgorithm {
 	
 	
 	/**
-	 * Berechnet log-likelihood //Löschen
-	 * 
-	 * @param weight = die Gewichtung zu jedem element aus data
-	 * @param data = ArrayList mit Elementen aus der csv
-	 * @param P_k = Wahrscheinlichkeit pro Cluster. Wir haben zwei Cluster, mit jeweils 0.5
-	 * @param coords = Startparameter, mittelpunkt der beiden Cluster.
-	 * @return
-	 */
-//	public double logLikelihood(ArrayList<Double> weight, ArrayList<Double> data, double P_k, ArrayList<ArrayList<Double>> coords){
-//		double a = 0;
-//		double b = 0;
-//		
-//		int numCluster = coords.size();
-//		
-//		for(int i = 0; i < data.size(); i++){
-//			for(int k = 0; k < numCluster; k++){
-//				a += P_k*computeF(data.get(i), coords.get(k).get(0), coords.get(k).get(1));
-//			}
-//			b += Math.log(a);
-//		}
-//
-//		return b;
-//	}
-	
-	/**
 	 * Berechnet log-likelihood wie in VL 5, Folie 29 für 2 Cluster
 	 * @return log-likelihood
 	 */
@@ -215,14 +191,27 @@ public class EMAlgorithm {
 	}
 	
 	public void runAlgorithm(int numberOfIterations, String path, String split){
+		
 		System.out.println("Starte Algorithmus, mit " + numberOfIterations + " Iterationen.");
 		data = parseCSV(path, split);
-		weights1 = data; //Dient nur dazu, dass weights1 gleich viele Einträge wie data hat und initialisiert ist.
-		weights2 = data;
+		weights1.addAll(data); //Dient nur dazu, dass weights1 gleich viele Einträge wie data hat und initialisiert ist.
+		weights2.addAll(data);
+		
+		try{
+		PrintWriter writer = new PrintWriter("results.txt", "UTF-8");	
+		
 		for(int i = 0; i < numberOfIterations; i++){
 			eStep();
 			mStep();
-			System.out.println((i+1) + ". Iteration: Cluster A (" + mu1 + ", " + sigma1 + "); Cluster B (" + mu2 + ", " + sigma2 + ")" + " ll: " + logLikelihood());
+			
+			//writes results to file
+			writer.println((i+1) + ". Iteration: Cluster A (" + mu1 + ", " + sigma1 + "); Cluster B (" + mu2 + ", " + sigma2 + ")" + " logLikelihood: " + logLikelihood());	
+			System.out.println((i+1) + ". Iteration: Cluster A (" + mu1 + ", " + sigma1 + "); Cluster B (" + mu2 + ", " + sigma2 + ")" + " logLikelihood: " + logLikelihood());
+		}
+		
+		writer.close();
+		} catch(IOException e1) {
+	        System.out.println("Error during writing");
 		}
 		System.out.println("Algorithmus beendet.");
 	}
@@ -249,6 +238,7 @@ public class EMAlgorithm {
 	
 	/**
 	 * Berechner die neuen mus und sigmas
+	 * Siehe VL5, Folie 25
 	 */
 	public void mStep(){
 		
@@ -270,101 +260,12 @@ public class EMAlgorithm {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		EMAlgorithm e = new EMAlgorithm();
-//		e.data=e.parseCSV("C:\\Users\\Yorrick\\workspace\\EMAlgorithm\\src\\data.csv", "   ");
 		
 		//setze vorgegebene Werte
 		e.setDefaultValues();
 		
 		//Starte Algorithmus
-		e.runAlgorithm(20, "C:\\Users\\Yorrick\\workspace\\EMAlgorithm\\src\\data.csv", "   ");
-		
-		
-		
-		
-		
-//		//Initialbelegung der beiden Tupel wird gebildet.
-//		//Der EM speichert hier die Tupel der jeweiligen Iteration
-//		double mu1 = 1;
-//		double sigma1 = 1;
-//		double mu2 = 4;
-//		double sigma2 = 1;
-//		
-//		
-//		//Befühle beide Gewichtslisten mit Initialgewichten
-//		for(int i = 0; i<e.data.size(); i++){
-//			e.weights1.add(0.5);
-//			e.weights2.add(0.5);
-//		}
-//		
-//		//Bildung der Coord Tupel für die Log-Likelihood
-//		ArrayList<Double> c1 = new ArrayList();
-//		c1.add(mu1);
-//		c1.add(sigma1);
-//		
-//		ArrayList<Double> c2 = new ArrayList();
-//		c2.add(mu2);
-//		c2.add(sigma2);
-//		
-//		e.init_coords.add(c1);
-//		e.init_coords.add(c2);
-//		
-//		System.out.println("Initialbelegung ist: (" + e.init_coords.get(0).get(0) + ", " + e.init_coords.get(0).get(1) 
-//				+ "); (" + e.init_coords.get(1).get(0) + ", " + e.init_coords.get(1).get(1) + ")");
-//		
-//		double log = e.logLikelihood(e.weights1, e.data, 0.5, e.init_coords);
-//		System.out.println("log-likelihood: " + log);
-//		
-//		
-//		//Beginn des EM, wird 20 mal iteriert.
-//		for(int j = 0; j < 20; j++){
-//			//E-Phase
-//			//calculation of new weights
-//			
-//			//Listen in die die neuen Gewichte geschrieben werden.
-//			ArrayList<Double> x = new ArrayList();
-//			ArrayList<Double> y = new ArrayList();
-//			
-//			for(int i = 0; i < e.data.size(); i++){
-//				
-////				System.out.println(e.computeF(e.data.get(i), mu1, sigma1));
-//				
-//				//Berechnet die neuen Gewichte
-//				double w1 = (e.computeF(e.data.get(i), mu1, sigma1) * 0.5) / log;
-//				double w2 = (e.computeF(e.data.get(i), mu2, sigma2) * 0.5) / log;
-//				
-//				//Fügt sie in die Listen ein
-//				x.add(w1);
-//				y.add(w2);
-//				
-//			}
-//			
-//			//Überschreibt die alten Gewichte
-//			e.weights1 = x;
-//			e.weights2 = y;
-//			
-//			//M-Phase
-//			//calculation of coords
-//			
-//			//mu
-//			mu1 = e.calculateMu(e.data, e.weights1);
-//			mu2 = e.calculateMu(e.data, e.weights2);
-//			//sigma
-//			sigma1 =e.getSigma(e.data, e.weights1);
-//			sigma2 =e.getSigma(e.data, e.weights2);
-//			
-//			System.out.println((j+1) + ". (mu1, sigma1): " + mu1 + ", " + sigma1);
-//			System.out.println((j+1) + ". (mu2, sigma2): " + mu2 + ", " + sigma2);
-//		
-//		}
-		
-//		System.out.println("mu = " + e.calculateMu(e.csv, 0.5));
-//		System.out.println("Sigma^2 = " + e.computeSigma2(e.csv, 0.5));
-//		System.out.println("Sigma = " + e.getSigma(e.csv, 0.5));
-//		System.out.println("Potenz von e: " + e.computePotenz(2, 3, 4));
-		
-//		System.out.println("ClusterProb von 15.2393: " + e.computeF(15.2393, 1, 1));
-		
-		
+		e.runAlgorithm(e.iterations, "C:\\Users\\Yorrick\\workspace\\EMAlgorithm\\src\\data.csv", "   ");
 	}
 	
 	
