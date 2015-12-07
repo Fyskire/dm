@@ -240,9 +240,9 @@ public class EMAlgorithm {
 			double w_i =  PrXzuA * pA / PrX;
 			double w_i2 = PrXzuB * pB /PrX;
 			
-			//System.out.println(w_i + w_i2);
+			//System.out.println("Sollte 1 sein: w_i + w_i2);
 			
-			weights1.set(i, w_i);
+			weights1.set(i, w_i);//hier mal mit debugger beobachten
 			weights2.set(i, (1-w_i));
 		}
 	}
