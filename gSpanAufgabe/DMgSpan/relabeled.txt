@@ -1,0 +1,10 @@
+edgeLabels
+fID oID
+0    0 
+1    1 
+
+nodeLabels
+fID oID
+0 0
+1 1
+2 2

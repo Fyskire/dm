@@ -1,0 +1,8 @@
+Random Forest hat anscheindend Probleme mit string in den Daten.
+Daher wurden in den arffs die Molekülnamen entfernt.
+
+Die Moleküle Ng2002bmc_8j und Czekaj2002bmcl_9f haben hin und wieder zu kleineren Fehlern geführt.
+Ich konnte jedoch nicht herausfinden wieso.
+
+Java Laufzeit zum Erstellen der arff
+Run-time: 8068327 ms = 134.47 min

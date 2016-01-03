@@ -1,0 +1,3 @@
+minsup: 75
+Number of frequent Subgraphs: 2857
+maxSubgraphSize: 10
