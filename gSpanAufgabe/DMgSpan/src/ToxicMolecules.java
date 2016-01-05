@@ -18,6 +18,7 @@ public class ToxicMolecules {
     private List<String> moleculeNames;
     private List<Integer> toxicList;
     private List<ArrayList<Boolean>> subsList;
+    private List<ArrayList<String>> trainingDfsList;
     
     /**
      * to input molecules.groundTruth
@@ -238,7 +239,7 @@ public class ToxicMolecules {
     }
     
     /**
-     * checks if subgraphs in molecules or not; for every molecule
+     * checks if subgraphs in molecules or not; for every molecule (dated)
      */
     public void checkSubOccurrence() {
         String currentSubs = "gSpanSubgraphs"+File.separator+"currentSub.txt";
@@ -257,7 +258,7 @@ public class ToxicMolecules {
     }
     
     /**
-     * checks if subgraphs in a certain molecule
+     * checks if subgraphs in a certain molecule (dated)
      * @param wantedSubs
      * @param moleculeSubs
      * @return
@@ -307,7 +308,7 @@ public class ToxicMolecules {
     }
     
     /**
-     * checks if gSpan-Result contains certain DFS
+     * checks if gSpan-Result contains certain DFS (dated)
      * @param DFS
      * @param moleculeSubs
      * @return
@@ -352,6 +353,89 @@ public class ToxicMolecules {
     }
     
     /**
+     * checks if subgraphs in molecules or not; for every molecule (updated)
+     */
+    public void newCheckSubOccurrence() {
+        String currentSubs = "gSpanSubgraphs"+File.separator+"currentSub.txt";
+        subsList = new ArrayList<ArrayList<Boolean>>();
+        
+        trainingDfsList = createDfsList("gSpanSubgraphs"+File.separator+"trainingSub.txt");
+        
+        for (int i = 0; i < moleculeNames.size(); i++) {
+            System.out.println(i);
+            // create subgraphs of i-th molecule
+            // maxEdges here hard coded with 10, could be read out of trainingLog.txt
+            gSpanCommand(10, 1, "GSP"+File.separator+i+"_"+moleculeNames.get(i)+".gsp", currentSubs, "gSpanSubgraphs"+File.separator+"currentLog.txt");
+            
+            // checks which searched subgraphs in the i-th molecule
+            ArrayList<Boolean> containList = new ArrayList<Boolean>();
+            ArrayList<ArrayList<String>> currentDfsList = createDfsList(currentSubs);
+            for (ArrayList<String> dfs : trainingDfsList) {
+                containList.add(currentDfsList.contains(dfs));
+            }
+            
+            // to clear currentSub.txt because there are 2 sdfs which create no gSpan Result
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter(currentSubs));
+                bw.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+            subsList.add( containList );
+        }
+        
+    }
+    
+    /**
+     * creates dfsList
+     */
+    public ArrayList<ArrayList<String>> createDfsList(String gSpanResult) {
+        ArrayList<ArrayList<String>> dfsList = new ArrayList<ArrayList<String>>();
+        
+        BufferedReader br = null;
+        String line = "";
+        
+        try {
+            br = new BufferedReader(new FileReader(gSpanResult));
+            ArrayList<String> DFS = new ArrayList<String>();
+            // while-loop to go through whole trainingSub.txt
+            while ((line = br.readLine()) != null){
+                
+                if (!line.equals("") && !line.startsWith("(")) { // line with index and occurrence number
+                    continue;
+                }
+                
+                if (line.startsWith("(")) { // DFS
+                    DFS.add(line);
+                    continue;
+                }
+                
+                if (line.equals("") && DFS.size() > 0) { // first empty line after DFS
+                    dfsList.add(DFS);
+                    DFS = new ArrayList<String>();
+                }
+                
+            }
+            
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return dfsList;
+    }
+    
+    /**
      * to write the arffs
      */
     public void writeArff() {
@@ -379,10 +463,10 @@ public class ToxicMolecules {
             for (int i = 0; i < moleculeNames.size(); i+=2) {
                 wr.write(moleculeNames.get(i));
                 wr.write(",");
-                wr.write(toxicList.get(i));
+                wr.write(toxicList.get(i).toString());
                 for (int j = 0; j < subsList.get(i).size(); j++) {
                     wr.write(",");
-                    wr.write(subsList.get(i).get(j)? 1 : 0);
+                    wr.write(subsList.get(i).get(j)? "1" : "0");
                 }
                 wr.newLine();
             }
@@ -431,6 +515,35 @@ public class ToxicMolecules {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * to create all.gsp with all molecules; analog to find molecule.gsp
+     * just to find the 2 defective molecules
+     * -> Renatus1998jmc_6b (223) and Renatus1998jmc_6a (226)
+     */
+    public void creategsp() {
+        BufferedWriter wr = null;
+        String line = "";
+        
+        try {
+            wr = new BufferedWriter(new FileWriter("GSP"+File.separator+"all.gsp"));
+            
+            for (int i = 0; i < moleculeNames.size(); i++) {
+                BufferedReader br = new BufferedReader(new FileReader("GSP"+File.separator+i+"_"+moleculeNames.get(i)+".gsp"));
+                while ((line = br.readLine()) != null){
+                    wr.write(line);
+                    wr.newLine();
+                }
+                br.close();
+            }
+            
+            wr.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+    }
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
@@ -444,7 +557,7 @@ public class ToxicMolecules {
         // maxEdges 10 to avoid to large files at occurrence checking later
         // minSup 75 because its nearly the half
         tm.gSpanCommand(10, 75, "GSP"+File.separator+"training.gsp", "gSpanSubgraphs"+File.separator+"trainingSub.txt", "gSpanSubgraphs"+File.separator+"trainingLog.txt");
-        tm.checkSubOccurrence(); // check the occurrence of training subgraphs in each molecule and write it in lists
+        tm.newCheckSubOccurrence(); // check the occurrence of training subgraphs in each molecule and write it in lists
         tm.writeArff(); // create the arff file for Weka
         
         long end = System.currentTimeMillis();
