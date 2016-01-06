@@ -1,3 +1,1 @@
-minsup: 1
-Number of frequent Subgraphs: 2644
-maxSubgraphSize: 10
+No edges in DB!!!!!!!

@@ -241,21 +241,21 @@ public class ToxicMolecules {
     /**
      * checks if subgraphs in molecules or not; for every molecule (dated)
      */
-    public void checkSubOccurrence() {
-        String currentSubs = "gSpanSubgraphs"+File.separator+"currentSub.txt";
-        subsList = new ArrayList<ArrayList<Boolean>>();
-        
-        
-        for (int i = 0; i < moleculeNames.size(); i++) {
-            System.out.println(i);
-            // create subgraphs of i-th molecule
-            // maxEdges here hard coded with 10, could be read out of trainingLog.txt
-            gSpanCommand(10, 1, "GSP"+File.separator+i+"_"+moleculeNames.get(i)+".gsp", currentSubs, "gSpanSubgraphs"+File.separator+"currentLog.txt");
-            // checks which searched subgraphs in the i-th molecule
-            subsList.add( containsSubs("gSpanSubgraphs"+File.separator+"trainingSub.txt", currentSubs) );
-        }
-        
-    }
+//    public void checkSubOccurrence() {
+//        String currentSubs = "gSpanSubgraphs"+File.separator+"currentSub.txt";
+//        subsList = new ArrayList<ArrayList<Boolean>>();
+//        
+//        
+//        for (int i = 0; i < moleculeNames.size(); i++) {
+//            System.out.println(i);
+//            // create subgraphs of i-th molecule
+//            // maxEdges here hard coded with 10, could be read out of trainingLog.txt
+//            gSpanCommand(10, 1, "GSP"+File.separator+i+"_"+moleculeNames.get(i)+".gsp", currentSubs, "gSpanSubgraphs"+File.separator+"currentLog.txt");
+//            // checks which searched subgraphs in the i-th molecule
+//            subsList.add( containsSubs("gSpanSubgraphs"+File.separator+"trainingSub.txt", currentSubs) );
+//        }
+//        
+//    }
     
     /**
      * checks if subgraphs in a certain molecule (dated)
@@ -355,7 +355,7 @@ public class ToxicMolecules {
     /**
      * checks if subgraphs in molecules or not; for every molecule (updated)
      */
-    public void newCheckSubOccurrence() {
+    public void newCheckSubOccurrence(int maxKanten) {
         String currentSubs = "gSpanSubgraphs"+File.separator+"currentSub.txt";
         subsList = new ArrayList<ArrayList<Boolean>>();
         
@@ -365,7 +365,7 @@ public class ToxicMolecules {
             System.out.println(i);
             // create subgraphs of i-th molecule
             // maxEdges here hard coded with 10, could be read out of trainingLog.txt
-            gSpanCommand(10, 1, "GSP"+File.separator+i+"_"+moleculeNames.get(i)+".gsp", currentSubs, "gSpanSubgraphs"+File.separator+"currentLog.txt");
+            gSpanCommand(maxKanten, 1, "GSP"+File.separator+i+"_"+moleculeNames.get(i)+".gsp", currentSubs, "gSpanSubgraphs"+File.separator+"currentLog.txt");
             
             // checks which searched subgraphs in the i-th molecule
             ArrayList<Boolean> containList = new ArrayList<Boolean>();
@@ -557,7 +557,7 @@ public class ToxicMolecules {
         // maxEdges 10 to avoid to large files at occurrence checking later
         // minSup 75 because its nearly the half
         tm.gSpanCommand(10, 75, "GSP"+File.separator+"training.gsp", "gSpanSubgraphs"+File.separator+"trainingSub.txt", "gSpanSubgraphs"+File.separator+"trainingLog.txt");
-        tm.newCheckSubOccurrence(); // check the occurrence of training subgraphs in each molecule and write it in lists
+        tm.newCheckSubOccurrence(10); // check the occurrence of training subgraphs in each molecule and write it in lists
         tm.writeArff(); // create the arff file for Weka
         
         long end = System.currentTimeMillis();
