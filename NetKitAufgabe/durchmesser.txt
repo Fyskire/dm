@@ -1,0 +1,51 @@
+/*
+Durchmesser des größten zusammenhängenden Teilgraphen ohne Berücksichtigung der Kantengewichte
+*/
+
+imdb_all
+Durchmesser: 7
+Komplett zusammenhängend: false
+
+imdb_prodco
+Durchmesser: 9
+Komplett zusammenhängend: false
+
+cora_all
+Durchmesser: 11
+Komplett zusammenhängend: false
+
+cora_cite
+Durchmesser: 16
+Komplett zusammenhängend: false
+
+webkb_cornell_cocite
+Durchmesser: 4
+Komplett zusammenhängend: false
+
+webkb_cornell_link1
+Durchmesser: 8
+Komplett zusammenhängend: false
+
+webkb_texas_cocite
+Durchmesser: 5
+Komplett zusammenhängend: false
+
+webkb_texas_link1
+Durchmesser: 10
+Komplett zusammenhängend: false
+
+webkb_washington_cocite
+Durchmesser: 4
+Komplett zusammenhängend: true
+
+webkb_washington_link1
+Durchmesser: 9
+Komplett zusammenhängend: false
+
+webkb_wisconsin_cocite
+Durchmesser: 4
+Komplett zusammenhängend: false
+
+webkb_wisconsin_link1
+Durchmesser: 11
+Komplett zusammenhängend: false
