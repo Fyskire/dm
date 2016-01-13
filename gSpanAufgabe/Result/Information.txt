@@ -1,8 +1,0 @@
-Random Forest hat anscheindend Probleme mit string in den Daten.
-Daher wurden mit Weka die Molekülnamen entfernt.
-
-Aus den sdf der Moleküle Renatus1998jmc_6b (223) und Renatus1998jmc_6a (226)
-erstellt das Perl Script Graphen ohne Kanten. Scheinen also fehlerhaft zu sein.
-
-Java Laufzeit zum Erstellen der arff
-Run-time: 855477 ms = 14,25 min
