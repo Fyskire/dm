@@ -1,0 +1,68 @@
+/*
+NetKit erstellt netkit-run-0.log
+Knotenanzahl im log stimmt mit Zeilenanzahl immer überein
+Anzahl der Kanten: Zeilenanzahl (log-Datei)
+-in imdb_prodco.rn anscheinend alle Kanten nur einmal aufgelistet
+-in allen rn-Dateien darunter wohl einmal für Hin- und nochmal für Rückrichtung (Wie kommt ungerade Anzahl zustande?)
+-in imdb_all.rn gemischt?
+*/
+
+imdb_all
+Anzahl der Knoten: 1441
+Anzahl der Kanten: 51481 (92248)
+Anzahl der Klassen: 2
+
+imdb_prodco
+Anzahl der Knoten: 1441
+Anzahl der Kanten: 20317 (40634)
+Anzahl der Klassen: 2
+
+cora_all
+Anzahl der Knoten: 4240
+Anzahl der Kanten: 71824 (71824)
+Anzahl der Klassen: 7
+
+cora_cite
+Anzahl der Knoten: 4240
+Anzahl der Kanten: 22516 (22516)
+Anzahl der Klassen: 7
+
+webkb_cornell_cocite
+Anzahl der Knoten: 351
+Anzahl der Kanten: 26832 (26832)
+Anzahl der Klassen: 6
+
+webkb_cornell_link1
+Anzahl der Knoten: 351
+Anzahl der Kanten: 1393 (1393)
+Anzahl der Klassen: 6
+
+webkb_texas_cocite
+Anzahl der Knoten: 338
+Anzahl der Kanten: 32988 (32988)
+Anzahl der Klassen: 6
+
+webkb_texas_link1
+Anzahl der Knoten: 338
+Anzahl der Kanten: 1002 (1002)
+Anzahl der Klassen: 6
+
+webkb_washington_cocite
+Anzahl der Knoten: 434
+Anzahl der Kanten: 30462 (30462)
+Anzahl der Klassen: 6
+
+webkb_washington_link1
+Anzahl der Knoten: 434
+Anzahl der Kanten: 1941 (1941)
+Anzahl der Klassen: 6
+
+webkb_wisconsin_cocite
+Anzahl der Knoten: 354
+Anzahl der Kanten: 33250 (33250)
+Anzahl der Klassen: 6
+
+webkb_wisconsin_link1
+Anzahl der Knoten: 354
+Anzahl der Kanten: 1155 (1155)
+Anzahl der Klassen: 6
