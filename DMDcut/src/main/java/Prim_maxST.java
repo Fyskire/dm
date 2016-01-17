@@ -39,7 +39,7 @@ public class Prim_maxST {
             	int x =pq.get(i).edge.x;
             	
             	for(int j = 0; j < pq.size(); j++){
-            		if(pq.get(j).edge)
+//            		if(pq.get(j).edge)
             	}
             }
 //            Ende des aufbaus
