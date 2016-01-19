@@ -5,6 +5,7 @@ class WeightedEdge implements Comparable<WeightedEdge>{
 
     double weight;
     Tuple edge;
+    double similarity = 0;
 
     WeightedEdge (double weight, Tuple edge){
 
