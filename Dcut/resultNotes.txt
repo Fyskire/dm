@@ -3,7 +3,7 @@ Unser DCT stimmt größtenteils mit dem im Paper überein.
 Nur am rechten Arm ab Knoten 1 kommt es je nach Lauf zu unterschiedlichen Reihenfolgen.
 1.) 1-5, 5-11, 5-7,  7-6, 7-17 (wie im Paper)
 2.) 1-11, 11-5, 11-6, 6-7, 6-17
-Grund: Konten 5 und 11 haben die gleiche Similarity zu Knoten 1-11
+Grund: Konten 5 und 11 haben die gleiche Similarity zu Knoten 1
 
 3)
 13 Cluster
