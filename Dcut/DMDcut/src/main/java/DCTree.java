@@ -204,6 +204,9 @@ public class DCTree {
 		double minDcutValue = Double.MAX_VALUE;
 		Node dcutNode = null;
 		
+		HashSet<Node> partition1 = new HashSet<Node>(); // just for yeast
+		HashSet<Node> partition2 = new HashSet<Node>();
+		
 		for (Node u : v) { // iterate through nodes
 			if (u.connect == null) { // skip first node in DCT (and unconnected nodes)
 				continue;
@@ -258,10 +261,13 @@ public class DCTree {
 				minDcutValue = dcutValue;
 				dcutNode = u;
 				// just for Yeast
-				partitions.add(c1);
-				partitions.add(c2);
+				partition1 = c1;
+				partition2 = c2;
 			}
 		}
+		
+		partitions.add(partition1); // just for yeast
+		partitions.add(partition2);
 		
 		System.out.println("Cut between " + (v.indexOf(dcutNode)+1) + " and " + (v.indexOf(dcutNode.connect)+1)); // output
 		dcutNode.connect = null; // cut
@@ -271,10 +277,11 @@ public class DCTree {
 	 * for task 3; under construction
 	 */
 	public void yeast() {
-		ArrayList<HashSet<Integer>> realClustering = inputClu();
+		ArrayList<HashSet<Integer>> realClustering = inputClu(); // get real 13 clusters of yeast
 		ArrayList<HashSet<Integer>> ourClustering = new ArrayList<HashSet<Integer>>();
 		ArrayList<HashSet<Node>> ourNodeClustering = new ArrayList<HashSet<Node>>();
 		
+		// get Clusters out of partitions (should be 11 cuts and 12 cluster)
 		for (int i = 0; i < partitions.size()-1; i++) {
 			boolean isCluster = true;
 			for (int j = i+1; j < partitions.size(); j++) {
@@ -289,11 +296,31 @@ public class DCTree {
 		}
 		ourNodeClustering.add(partitions.get(partitions.size()-1));
 		
+		// put all nodes, which are not in dct, in 13th cluster
+		HashSet<Node> singletons = new HashSet<Node>();
+		for (Node n : v) {
+		    if (n.connect == null) {
+		        boolean notInDct = true;
+		        for (HashSet<Node> hsn : ourNodeClustering) {
+		            if (hsn.contains(n)) {
+		                notInDct = false;
+		                break;
+		            }
+		        }
+		        if (notInDct) {
+		            singletons.add(n);
+		        }
+		    }
+		}
+		ourNodeClustering.add(singletons);
+		
+		// to have clusters in the same format
 		for (HashSet<Node> hsn : ourNodeClustering) {
 			HashSet<Integer> hsi = new HashSet<Integer>();
 			for (Node n : hsn) {
 				 hsi.add( v.indexOf(n) );
 			}
+			ourClustering.add(hsi);
 		}
 		
 		CalculateRand.calculateRand(realClustering, ourClustering, 2361);
@@ -317,6 +344,7 @@ public class DCTree {
 			br = new BufferedReader(new FileReader("YeastModified.clu"));
 			while ((line = br.readLine()) != null){
             	realCluster.get( Integer.valueOf(line)-1 ).add(j);
+            	j++;
             }
 			
 			br.close();
@@ -329,31 +357,20 @@ public class DCTree {
 		return realCluster;
 	}
 	
-	/**
-	 * count how many nodes are not connected with the DTC (1 is normal, because of the first of the DTC); just test
-	 */
-	@Deprecated
-	public void notConnected() {
-	    int count = 0;
-	    for (Node n : v) {
-	        if (n.connect == null) count++;
-	    }
-	    System.out.println(count);
-	}
 	
 	public static void main(String[] args) {
 		DCTree t = new DCTree();
-		t.input("karate.paj");
+		t.input("football.paj");
 		//t.addSim();
 		t.dcTree();
-		int k = 1; // how many cuts
+		int k = 11; // how many cuts
 		for ( int i = 0; i < k; i++) {
 			t.dcut();
 		}
-		/*
-		//just for yeast
-		t.notConnected(); // test
-		*/
+		
+//		//just for yeast
+//		t.yeast();
+		
 	}
 
 }
