@@ -83,6 +83,27 @@ public class CalculateRand {
         
         double nmi = iuv / Math.sqrt(hu*hv);
         System.out.println("NMI = " + nmi);
+        
+        // calculate Purity
+        ArrayList<Integer> maxList = new ArrayList<Integer>();
+        for (HashSet<Integer> cluster : cutClusters1) {
+            int max = Integer.MIN_VALUE;
+            HashSet<Integer> intersection = new HashSet<Integer>();
+            intersection.addAll(cluster);
+            for (HashSet<Integer> classification : cutClusters2) {
+                intersection.retainAll(classification);
+                if (intersection.size() > max) {
+                    max = intersection.size();
+                }
+            }
+            maxList.add(max);
+        }
+        double purity = 0;
+        for (int i : maxList) {
+            purity += i;
+        }
+        purity /= numOfEl;
+        System.out.println("Cluster Purity = " + purity);
     }
     
     

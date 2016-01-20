@@ -323,7 +323,7 @@ public class DCTree {
 			ourClustering.add(hsi);
 		}
 		
-		CalculateRand.calculateRand(realClustering, ourClustering, 2361);
+		CalculateRand.calculateRand(ourClustering, realClustering, 2361);
 	}
 	
 	/**
@@ -360,7 +360,7 @@ public class DCTree {
 	
 	public static void main(String[] args) {
 		DCTree t = new DCTree();
-		t.input("football.paj");
+		t.input("YeastModified.paj");
 		//t.addSim();
 		t.dcTree();
 		int k = 11; // how many cuts
@@ -368,8 +368,8 @@ public class DCTree {
 			t.dcut();
 		}
 		
-//		//just for yeast
-//		t.yeast();
+		//just for yeast
+		t.yeast();
 		
 	}
 

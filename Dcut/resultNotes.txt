@@ -10,8 +10,8 @@ Grund: Konten 5 und 11 haben die gleiche Similarity zu Knoten 1
 (DCT mit 11 Cuts -> 12 Cluster) + 1 Cluster der Knoten, die nicht im DCT liegen
 RI = 0.8085872834693716
 ARI = 0.8086222361594403
-NMI = -
-PoC = -
+NMI = 0.016864109867787396
+Cluster Purity = 0.11986446421008047
 
 4)
 Input done. ew size is: 115
