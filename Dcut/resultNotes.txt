@@ -11,7 +11,7 @@ Grund: Konten 5 und 11 haben die gleiche Similarity zu Knoten 1
 RI = 0.8085872834693716
 ARI = 0.8086222361594403
 NMI = 0.016864109867787396
-Cluster Purity = 0.11986446421008047
+Cluster Purity = 0.2689538331215587
 
 4)
 Input done. ew size is: 115

@@ -88,9 +88,9 @@ public class CalculateRand {
         ArrayList<Integer> maxList = new ArrayList<Integer>();
         for (HashSet<Integer> cluster : cutClusters1) {
             int max = Integer.MIN_VALUE;
-            HashSet<Integer> intersection = new HashSet<Integer>();
-            intersection.addAll(cluster);
             for (HashSet<Integer> classification : cutClusters2) {
+                HashSet<Integer> intersection = new HashSet<Integer>();
+                intersection.addAll(cluster);
                 intersection.retainAll(classification);
                 if (intersection.size() > max) {
                     max = intersection.size();
