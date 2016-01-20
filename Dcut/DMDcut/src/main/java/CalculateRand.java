@@ -56,33 +56,40 @@ public class CalculateRand {
                 ( numOfCom*numOfCom -  ((N4+N2)*(N4+N3) + (N3+N1)*(N2+N1)));
         System.out.println("ARI = " + ari);
         
-        //calculate NMI
-        // I(U,V)
-        double iuv = 0;
-        double hu = 0;
-        double hv = 0;
-        for(HashSet<Integer> clusterI : cutClusters1){
-            //P(i)
-            double pi = clusterI.size() / (double)numOfEl;
-            hu += pi * Math.log(pi);
-            for(HashSet<Integer> clusterJ : cutClusters2){
-                //P(j)
-                double pj = clusterJ.size() / (double)numOfEl;
-                hv += pj * Math.log(pj);
-                // P(i,j)
-                ArrayList<Integer> clusterInter = new ArrayList<Integer>();
-                clusterInter.addAll(clusterI);
-                clusterInter.retainAll(clusterJ);
-                double pij = clusterInter.size() / (double)numOfEl;
-                if ( pij > 0)
-                    iuv += pij * Math.log(pij/(pi*pj));
+        
+        // calculate NMI
+        double ho = 0;
+        for (HashSet<Integer> clusterK : cutClusters1) {
+            double hoTemp = clusterK.size() / (double) numOfEl;
+            hoTemp *= Math.log(hoTemp);
+            ho += hoTemp;
+        }
+        ho *= -1;
+        
+        double hc = 0;
+        for (HashSet<Integer> clusterJ : cutClusters2) {
+            double hcTemp = clusterJ.size() / (double) numOfEl;
+            hcTemp *= Math.log(hcTemp);
+            hc += hcTemp;
+        }
+        hc *= -1;
+        
+        double ioc = 0;
+        for (HashSet<Integer> clusterK : cutClusters1) {
+            for (HashSet<Integer> clusterJ : cutClusters2) {
+                HashSet<Integer> intersection = new HashSet<Integer>();
+                intersection.addAll(clusterK);
+                intersection.retainAll(clusterJ);
+                double iocTemp = intersection.size() / (double) numOfEl;
+                iocTemp *= Math.log( numOfEl*intersection.size() / (double) (clusterK.size()*clusterJ.size()) );
+                if (!Double.isNaN(iocTemp))
+                    ioc += iocTemp;
             }
         }
-        hu *= -1;
-        hv *= -1;
         
-        double nmi = iuv / Math.sqrt(hu*hv);
+        double nmi = ioc / ((ho+hc)/2);
         System.out.println("NMI = " + nmi);
+        
         
         // calculate Purity
         ArrayList<Integer> maxList = new ArrayList<Integer>();
