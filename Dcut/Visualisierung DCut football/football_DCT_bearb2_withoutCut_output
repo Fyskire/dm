@@ -1,0 +1,687 @@
+digraph T {
+
+/*0 = Atlantic Coast*/
+ 	2, 26, 34, 38,46,90, 104,106,110 [style=filled, color="red"]
+/* 1 = Big East*/
+	20,30,31,36,56,80,95,102[style=filled, color="green"]
+/*2 = Big Ten*/
+	3,7,14,16,33,40,48,61,65,101,107[style=filled, color="blue"]
+/*3 = Big Twelve*/
+	4,6,11,41,53,73,75,82,85,99,103,108[style=filled, color="yellow"]
+/*4 = Conference USA*/
+	45,49,58,67,76,87,92,93,111,113[style=filled, color="purple"]
+/*5 = Independents*/
+	37,43,81,83,91[style=filled, color="cyan"]
+/*6 = Mid-American*/
+	13,15,19,27,32,35,39,44,55,62,72,86,100[style=filled, color="brown3"]
+/*7 = Mountain West*/
+	1,5,10,17,24,42,94,105[style=filled, color="burlywood"]
+/*8 = Pacific Ten*/
+	8,9,22,23,52,69,78,79,112,109[style=filled, color="gray"]
+/*9 = Southeastern*/
+	18,21,28,57,63,66,71,77,88,96,97,114[style=filled, color="tomato"]
+/*10 = Sun Belt*/
+	12,25,51,60,64,70,98[style=filled, color="beige"]
+/*11 = Western Athletic*/
+	29,47,50,54,59,68,74,84,89,115[style=filled, color="yellow4"]
+
+/*Namen der einzelnen Knoten*/
+   1 [label="BrighamYoung"]
+   2 [label="FloraState"]
+   3 [label="Iowa"]
+   4 [label="KansasState"]
+   5 [label="NewMexico"]
+   6 [label="TexasTech"]
+   7 [label="PennState"]
+   8 [label="SouthernCalifornia"]
+   9 [label="ArizonaState"]
+   10 [label="SanDiegoState"]
+   11 [label="Baylor"]
+   12 [label="NorthTexas"]
+   13 [label="NorthernIllinois"]
+   14 [label="Northwestern"]
+   15 [label="WesternMichigan"]
+   16 [label="Wisconsin"]
+   17 [label="Wyoming"]
+   18 [label="Auburn"]
+   19 [label="Akron"]
+   20 [label="VirginiaTech"]
+   21 [label="Alabama"]     
+   22 [label="UCLA"]
+   23 [label="Arizona"]
+   24 [label="Utah"]
+  25 [label="ArkansasState"]  
+   26 [label="NorthCarolinaState"]     
+   27 [label="BallState"]
+   28 [label="Flora"]
+   29 [label="BoiseState"]
+   30 [label="BostonCollege"]
+     
+  
+  
+  
+     
+   31 [label="WestVirginia"]
+     
+  
+  
+  
+     
+   32 [label="BowlingGreenState"]
+     
+  
+  
+  
+     
+   33 [label="Michigan"]
+     
+  
+  
+  
+     
+   34 [label="Virginia"]
+     
+  
+  
+  
+     
+   35 [label="Buffalo"]
+     
+  
+  
+  
+     
+   36 [label="Syracuse"]
+     
+  
+  
+  
+     
+   37 [label="CentralFlorida"]
+     
+  
+  
+  
+     
+   38 [label="GeorgiaTech"]
+     
+  
+  
+  
+     
+   39 [label="CentralMichigan"]
+     
+  
+  
+  
+     
+   40 [label="Purdue"]
+     
+  
+  
+  
+     
+   41 [label="Colorado"]
+     
+  
+  
+  
+     
+   42 [label="ColoradoState"]
+     
+  
+  
+  
+     
+   43 [label="Connecticut"]
+     
+  
+  
+  
+     
+   44 [label="EasternMichigan"]
+     
+  
+  
+  
+     
+   45 [label="EastCarolina"]
+     
+  
+  
+  
+     
+   46 [label="Duke"]
+     
+  
+  
+  
+     
+   47 [label="FresnoState"]
+     
+  
+  
+  
+     
+   48 [label="OhioState"]
+     
+  
+  
+  
+     
+   49 [label="Houston"]
+     
+  
+  
+  
+     
+   50 [label="Rice"]
+     
+  
+  
+  
+     
+   51 [label="Idaho"]
+     
+  
+  
+  
+     
+   52 [label="Washington"]
+     
+  
+  
+  
+     
+   53 [label="Kansas"]
+     
+  
+  
+  
+     
+   54 [label="SouthernMethodist"]
+     
+  
+  
+  
+     
+   55 [label="Kent"]
+     
+  
+  
+  
+     
+   56 [label="Pittsburgh"]
+     
+  
+  
+  
+     
+   57 [label="Kentucky"]
+     
+  
+  
+  
+     
+   58 [label="Louisville"]
+     
+  
+  
+  
+     
+   59 [label="LouisianaTech"]
+     
+  
+  
+  
+     
+   60 [label="LouisianaMonroe"]
+     
+  
+  
+  
+     
+   61 [label="Minnesota"]
+     
+  
+  
+  
+     
+   62 [label="MiamiOhio"]
+     
+  
+  
+  
+     
+   63 [label="Vanderbilt"]
+     
+  
+  
+  
+     
+   64 [label="MidleTennesseeState"]
+     
+  
+  
+  
+     
+   65 [label="Illinois"]
+     
+  
+  
+  
+     
+   66 [label="MississippiState"]
+     
+  
+  
+  
+     
+   67 [label="Memphis"]
+     
+  
+  
+  
+     
+   68 [label="Nevada"]
+     
+  
+  
+  
+     
+   69 [label="Oregon"]
+     
+  
+  
+  
+     
+   70 [label="NewMexicoState"]
+     
+  
+  
+  
+     
+   71 [label="SouthCarolina"]
+     
+  
+  
+  
+     
+   72 [label="Ohio"]
+     
+  
+  
+  
+     
+   73 [label="IowaState"]
+     
+  
+  
+  
+     
+   74 [label="SanJoseState"]
+     
+  
+  
+  
+     
+   75 [label="Nebraska"]
+     
+  
+  
+  
+     
+   76 [label="SouthernMississippi"]
+     
+  
+  
+  
+     
+   77 [label="Tennessee"]
+     
+  
+  
+  
+     
+   78 [label="Stanford"]
+     
+  
+  
+  
+     
+   79 [label="WashingtonState"]
+     
+  
+  
+  
+     
+   80 [label="Temple"]
+     
+  
+  
+  
+     
+   81 [label="Navy"]
+     
+  
+  
+  
+     
+   82 [label="TexasA&M"]
+     
+  
+  
+  
+     
+   83 [label="NotreDame"]
+     
+  
+  
+  
+     
+   84 [label="TexasElPaso"]
+     
+  
+  
+  
+     
+   85 [label="Oklahoma"]
+     
+  
+  
+  
+     
+   86 [label="Toledo"]
+     
+  
+  
+  
+     
+   87 [label="Tulane"]
+     
+  
+  
+  
+     
+   88 [label="Mississippi"]
+     
+  
+  
+  
+     
+   89 [label="Tulsa"]
+     
+  
+  
+  
+     
+   90 [label="NorthCarolina"]
+     
+  
+  
+  
+     
+   91 [label="UtahState"]
+     
+  
+  
+  
+     
+   92 [label="Army"]
+     
+  
+  
+  
+     
+   93 [label="Cincinnati"]
+     
+  
+  
+  
+     
+   94 [label="AirForce"]
+     
+  
+  
+  
+     
+   95 [label="Rutgers"]
+     
+  
+  
+  
+     
+   96 [label="Georgia"]
+     
+  
+  
+  
+     
+   97 [label="LouisianaState"]
+     
+  
+  
+  
+     
+   98 [label="LouisianaLafayette"]
+     
+  
+  
+  
+     
+   99 [label="Texas"]
+     
+  
+  
+  
+     
+   100 [label="Marshall"]
+     
+  
+  
+  
+     
+   101 [label="MichiganState"]
+     
+  
+  
+  
+     
+   102 [label="MiamiFlora"]
+     
+  
+  
+  
+     
+   103 [label="Missouri"]
+     
+  
+  
+  
+     
+   104 [label="Clemson"]
+     
+  
+  
+  
+     
+   105 [label="NevadaLasVegas"]
+     
+  
+  
+  
+     
+   106 [label="WakeForest"]
+     
+  
+  
+  
+     
+   107 [label="Indiana"]
+     
+  
+  
+  
+     
+   108 [label="OklahomaState"]
+     
+  
+  
+  
+     
+   109 [label="OregonState"]
+     
+  
+  
+  
+     
+   110 [label="Maryland"]
+     
+  
+  
+  
+     
+   111 [label="TexasChristian"]
+     
+  
+  
+  
+     
+   112 [label="California"]
+     
+  
+  
+  
+     
+   113 [label="AlabamaBirmingham"]
+     
+  
+  
+  
+     
+   114 [label="Arkansas"]
+     
+  
+  
+  
+     
+   115 [label="Hawaii"]
+
+/*Ergebnis des DCTs*/
+
+1;
+24 -> 1;
+10 -> 24;
+42 -> 10;
+17 -> 42;
+5 -> 10;
+105 -> 42;
+94 -> 42;
+23 -> 10;
+109 -> 23;
+79 -> 23;
+9 -> 23;
+112 -> 79;
+69 -> 79;
+52 -> 79;
+22 -> 112;
+78 -> 109;
+8 -> 78;
+51 -> 79;
+29 -> 51;
+70 -> 29;
+91 -> 51;
+12 -> 91;
+25 -> 51;
+6 -> 12;
+85 -> 6;
+11 -> 6;
+108 -> 11;
+99 -> 108;
+82 -> 108;
+103 -> 11;
+73 -> 103;
+41 -> 103;
+75 -> 73;
+4 -> 75;
+53 -> 75;
+68 -> 105;
+115 -> 68;
+89 -> 115;
+84 -> 89;
+50 -> 84;
+54 -> 50;
+47 -> 115;
+111 -> 115;
+74 -> 115;
+98 -> 6 [color=red];
+64 -> 98;
+60 -> 98;
+59 -> 60;
+77 -> 60;
+71 -> 77;
+96 -> 71;
+63 -> 96;
+57 -> 96;
+28 -> 57;
+114 -> 77;
+21 -> 114;
+97 -> 114;
+66 -> 97;
+88 -> 114;
+18 -> 88;
+81 -> 94;
+30 -> 81;
+95 -> 30;
+31 -> 95;
+36 -> 95;
+80 -> 95;
+20 -> 31;
+56 -> 80;
+102 -> 95;
+83 -> 95;
+92 -> 81;
+87 -> 92;
+49 -> 87;
+58 -> 92;
+76 -> 58;
+67 -> 76;
+45 -> 58;
+93 -> 58;
+113 -> 58;
+37 -> 60;
+13 -> 37;
+27 -> 13;
+44 -> 27;
+86 -> 44;
+15 -> 86;
+39 -> 15;
+55 -> 39;
+72 -> 55;
+100 -> 55;
+32 -> 55;
+19 -> 55;
+35 -> 19;
+62 -> 32;
+43 -> 27;
+3 -> 73;
+65 -> 3;
+61 -> 3;
+107 -> 61;
+14 -> 107;
+7 -> 65;
+16 -> 107;
+48 -> 7;
+101 -> 48;
+40 -> 101;
+33 -> 101;
+106 -> 63;
+46 -> 106;
+38 -> 106;
+104 -> 106;
+34 -> 106;
+2 -> 34;
+26 -> 106;
+110 -> 106;
+90 -> 106;
+}
