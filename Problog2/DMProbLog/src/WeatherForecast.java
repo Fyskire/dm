@@ -91,6 +91,22 @@ public class WeatherForecast {
                         bw.newLine();
                     }
                     
+                    if (Double.parseDouble(day[8]) > 3) { // more than 3 on Beaufort scale
+                        bw.write("evidence(weather(windy,"+i+"),true).");
+                        bw.newLine();
+                    } else {
+                        bw.write("evidence(weather(windy,"+i+"),false).");
+                        bw.newLine();
+                    }
+                    
+                    if (Double.parseDouble(day[5]) < 15) { // less than 15 degree Celsius 
+                        bw.write("evidence(weather(cold,"+i+"),true).");
+                        bw.newLine();
+                    } else {
+                        bw.write("evidence(weather(warm,"+i+"),true).");
+                        bw.newLine();
+                    }
+                    
                 }
                 bw.write("-----");
                 bw.newLine();

@@ -1,0 +1,11 @@
+Learning example: Station 10015 Helgoland; first 14 days
+0.0::weather(sun,0).
+1::weather(rain,T) :- \+weather(sun,T).
+0.39411023::weather(sun,T) :- integer(T), T>0, Tprev is T-1, weather(sun,Tprev).
+0.42449597::weather(sun,T) :- integer(T), T>0, Tprev is T-1, weather(rain,Tprev).
+1.0::weather(windy,0).
+0.86128112::weather(windy,T) :- integer(T), T>0, Tprev is T-1, weather(windy,Tprev).
+0.66311404::weather(windy,T) :- integer(T), T>0, Tprev is T-1, \+weather(windy,Tprev).
+1::weather(cold,T) :- \+weather(warm,T).
+0.37562318::weather(warm,T)  :- integer(T), T>=0, weather(sun,T).
+0.67630696::weather(warm,T) :- integer(T), T>=0, weather(rain,T).
